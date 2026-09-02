@@ -1,257 +1,2074 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1020">
-<title>LÜKS-VIN 2.0 — Dinamik ÖTV Karar Destek Sistemi</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b0f14">
+<title>LÜKS-VIN 2.1 — Araç Kimlik & ÖTV Karar Destek Sistemi</title>
+
 <style>
-:root{--bg:#080c16;--card:#111827;--card2:#172033;--line:#26334a;--text:#eef3fb;--muted:#91a0b7;--a:#59d0c6;--gold:#e7c16f;--red:#ef7d73;--green:#71d28b;--blue:#7ca7ff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(900px 500px at 20% -10%,#1a2843,transparent 60%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.wrap{max-width:1050px;margin:auto;padding:18px}
-header{padding:18px 0 12px;border-bottom:1px solid var(--line)}.brand{display:inline-block;color:var(--gold);border:1px solid #69562e;padding:4px 9px;border-radius:5px;font:700 12px ui-monospace,monospace;letter-spacing:.14em}h1{font-size:29px;line-height:1.15;margin:13px 0 8px}h2{font-size:19px;margin:0 0 12px}h3{font-size:15px;margin:0 0 9px}.lead{color:var(--muted);max-width:850px}.notice{margin-top:12px;padding:11px 13px;border-left:3px solid var(--gold);background:#15130e;color:#c9c3b4;font-size:13px;border-radius:0 6px 6px 0}
-nav{display:flex;gap:7px;overflow:auto;padding:13px 0;position:sticky;top:0;background:rgba(8,12,22,.94);backdrop-filter:blur(10px);z-index:5}nav button{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);padding:8px 11px;border-radius:7px}nav button.active{color:var(--a);border-color:#35736e}
-.card{background:rgba(17,24,39,.94);border:1px solid var(--line);border-radius:11px;padding:18px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(max-width:650px){.grid{grid-template-columns:1fr}h1{font-size:24px}}
-label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}input,select{width:100%;background:#090f1b;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:7px;font:15px ui-monospace,monospace}input:focus,select:focus{outline:none;border-color:var(--a)}button{cursor:pointer}.primary{background:var(--a);color:#071313;border:0;padding:12px 16px;border-radius:7px;font-weight:800}.secondary{background:var(--card2);color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:7px}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.status{color:var(--muted);font-size:13px;margin-top:10px}.ok{color:var(--green)}.err{color:var(--red)}.warn{color:var(--gold)}
-.hero{display:grid;grid-template-columns:1fr auto;gap:15px;align-items:center}.rate{font-size:44px;font-weight:900;color:var(--gold);line-height:1}.small{font-size:12px;color:var(--muted)}.pill{display:inline-block;padding:3px 8px;border-radius:99px;background:#1c2940;border:1px solid var(--line);font-size:11px;color:#cbd7e9;margin:2px}
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:700px){.kpi{grid-template-columns:repeat(2,1fr)}}.k{background:var(--card2);border:1px solid var(--line);padding:12px;border-radius:8px}.k b{display:block;font-size:25px}.k span{color:var(--muted);font-size:11px}
-.bar{margin:10px 0}.barhead{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.track{height:8px;background:#080d16;border:1px solid var(--line);border-radius:99px;overflow:hidden}.fill{height:100%;background:var(--a)}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-size:11px;text-transform:uppercase}.num{text-align:right;font-family:ui-monospace,monospace}
-details{border:1px solid var(--line);background:var(--card2);border-radius:8px;padding:10px 12px;margin-top:10px}summary{cursor:pointer;color:#dce6f5;font-weight:700}.tree{font-family:ui-monospace,monospace;background:#090e18;padding:13px;border-radius:8px;overflow:auto;white-space:pre-wrap;color:#cdd9ea}.step{border-left:3px solid var(--a);padding:8px 12px;margin:8px 0;background:#0e1726}.hidden{display:none!important}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.chip{border:1px solid #3c4960;background:#111a2a;color:#d5dfed;padding:6px 9px;border-radius:6px;font-size:12px}.footer{color:#68758b;font-size:11px;padding:15px 0 40px}
+:root{
+  --bg:#090d12;
+  --panel:#111720;
+  --panel2:#171f2b;
+  --line:#273242;
+  --text:#edf2f7;
+  --muted:#9ba8b7;
+  --faint:#667487;
+  --gold:#d4ad63;
+  --teal:#55c1b7;
+  --red:#e56b62;
+  --green:#70c489;
+  --orange:#e39b57;
+  --blue:#72a9df;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(1000px 500px at 10% -10%,#172331 0%,transparent 65%),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.5;
+}
+
+.wrap{
+  max-width:1050px;
+  margin:auto;
+  padding:18px;
+}
+
+header{
+  padding:24px 0 18px;
+  border-bottom:1px solid var(--line);
+}
+
+.logo{
+  display:inline-block;
+  font-family:monospace;
+  color:var(--gold);
+  border:1px solid #725d37;
+  padding:4px 9px;
+  border-radius:4px;
+  letter-spacing:.12em;
+  font-size:13px;
+}
+
+h1{
+  margin:12px 0 5px;
+  font-size:28px;
+}
+
+.subtitle{
+  color:var(--muted);
+  max-width:850px;
+}
+
+.notice{
+  margin-top:14px;
+  padding:11px 14px;
+  background:#15120d;
+  border:1px solid #4d3d22;
+  color:#cdbb97;
+  border-radius:6px;
+  font-size:13px;
+}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:20px;
+  margin-top:20px;
+}
+
+h2{
+  margin-top:0;
+  font-size:18px;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+input,select{
+  background:var(--bg);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:12px;
+  font-size:14px;
+}
+
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--teal);
+}
+
+#vin{
+  flex:1 1 300px;
+  font-family:monospace;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+button{
+  border:0;
+  border-radius:6px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-weight:650;
+}
+
+.primary{
+  background:var(--teal);
+  color:#07110f;
+}
+
+.secondary{
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--line);
+}
+
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.small{
+  color:var(--faint);
+  font-size:12px;
+  margin-top:8px;
+}
+
+.status{
+  display:none;
+  margin-top:14px;
+  padding:10px 12px;
+  border-radius:6px;
+  font-size:13px;
+  background:var(--panel2);
+}
+
+.status.ok{border-left:3px solid var(--green)}
+.status.error{border-left:3px solid var(--red)}
+.status.loading{border-left:3px solid var(--gold)}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+
+@media(max-width:750px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:450px){
+  .grid{grid-template-columns:1fr}
+}
+
+.metric{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:13px;
+}
+
+.metric .label{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.metric .value{
+  font-size:25px;
+  font-weight:700;
+  margin-top:3px;
+}
+
+.metric.gold .value{color:var(--gold)}
+.metric.teal .value{color:var(--teal)}
+.metric.red .value{color:var(--red)}
+.metric.blue .value{color:var(--blue)}
+
+.result{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:9px;
+  overflow:hidden;
+  margin-top:18px;
+}
+
+.result-head{
+  padding:17px 20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.result-title{
+  font-size:20px;
+  font-weight:700;
+}
+
+.result-sub{
+  color:var(--muted);
+  font-family:monospace;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.badges{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  padding:4px 8px;
+  border-radius:4px;
+  font-size:10px;
+  font-family:monospace;
+  border:1px solid var(--line);
+  color:var(--muted);
+}
+
+.badge.real{
+  color:var(--teal);
+  border-color:#285f59;
+}
+
+.badge.warning{
+  color:var(--gold);
+  border-color:#67532d;
+}
+
+.badge.good{
+  color:var(--green);
+  border-color:#356343;
+}
+
+.body{
+  padding:18px 20px;
+}
+
+.specgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 25px;
+}
+
+@media(max-width:650px){
+  .specgrid{grid-template-columns:1fr}
+}
+
+.spec{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px dotted #28313e;
+  padding:6px 0;
+  font-size:13px;
+}
+
+.spec span:first-child{color:var(--muted)}
+.spec span:last-child{
+  text-align:right;
+  font-family:monospace;
+}
+
+.scorebar{
+  margin-top:18px;
+}
+
+.scoreline{
+  display:grid;
+  grid-template-columns:150px 1fr 45px;
+  gap:9px;
+  align-items:center;
+  margin:9px 0;
+  font-size:12px;
+}
+
+.track{
+  height:8px;
+  background:#090d12;
+  border:1px solid var(--line);
+  border-radius:5px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  border-radius:5px;
+}
+
+.otv{
+  margin-top:18px;
+  padding:18px;
+  background:linear-gradient(135deg,#19160f,#171b20);
+  border:1px solid #59492d;
+  border-radius:8px;
+}
+
+.otv-title{
+  font-family:monospace;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.otv-value{
+  color:var(--gold);
+  font-size:43px;
+  font-weight:800;
+}
+
+.otv-desc{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.explain{
+  margin-top:15px;
+  padding:14px;
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:7px;
+}
+
+.explain h3{
+  margin:0 0 9px;
+  font-size:13px;
+  color:var(--muted);
+  font-family:monospace;
+}
+
+.explain li{
+  margin:5px 0;
+  font-size:13px;
+}
+
+.confidence{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.compare{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  font-size:12px;
+}
+
+th{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+}
+
+td.num{
+  text-align:right;
+  font-family:monospace;
+}
+
+.tree{
+  display:grid;
+  gap:7px;
+}
+
+.node{
+  padding:10px 12px;
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:5px;
+  font-size:13px;
+}
+
+.node strong{
+  color:var(--teal);
+}
+
+footer{
+  color:var(--faint);
+  font-size:11px;
+  line-height:1.7;
+  margin:25px 0 50px;
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
 <header>
-  <span class="brand">LÜKS-VIN 2.0</span>
-  <h1>Açıklanabilir Çok Boyutlu Araç Değerleme ve Dinamik ÖTV Karar Destek Sistemi</h1>
-  <div class="lead">VIN'den erişilebilen teknik verileri alır; performans, lüks, ekonomik değer, segment ve kullanım amacı bileşenlerini ayrı ayrı değerlendirir ve araştırma amaçlı önerilen ÖTV oranı üretir.</div>
-  <div class="notice"><b>Bilimsel prototip:</b> Bu sonuç resmi vergi değildir. Model ağırlıkları araştırma hipotezidir ve Türkiye verileriyle kalibre edilmelidir. NHTSA vPIC üretici tarafından bildirilen VIN verilerini sağlar; tüm dünya araçlarının eksiksiz donanım/fiyat/TRAMER veritabanı değildir.</div>
+  <span class="logo">LÜKS-VIN</span>
+
+  <h1>2.1 — Çok Katmanlı Araç Kimlik & ÖTV Karar Destek Sistemi</h1>
+
+  <div class="subtitle">
+    Gerçek VIN → VIN doğrulama → NHTSA/vPIC → teknik veri normalizasyonu →
+    versiyon eşleştirme → performans/lüks/ekonomi/segment analizi →
+    açıklanabilir ÖTV politika simülasyonu.
+  </div>
+
+  <div class="notice">
+    <strong>Önemli:</strong>
+    Bu sistem resmi ÖTV hesaplayıcısı değildir. Üretilen oran,
+    proje/politika simülasyonudur. Eksik veri gerçekmiş gibi uydurulmaz.
+    NHTSA sonucunun bulunmaması aracın dünyada bulunmadığı anlamına gelmez.
+  </div>
 </header>
 
-<nav>
-<button class="active" onclick="tab('sorgu',this)">VIN Sorgula</button>
-<button onclick="tab('karsilastir',this)">Karşılaştır</button>
-<button onclick="tab('karar',this)">Karar Ağacı</button>
-<button onclick="tab('metod',this)">Metodoloji</button>
-</nav>
+<section class="panel">
 
-<section id="sorgu">
-<div class="card">
-<h2>1 · Gerçek VIN sorgusu</h2>
-<div class="grid">
-<div><label>17 haneli VIN</label><input id="vin" maxlength="17" placeholder="Örn. 1HGCM82633A004352" autocomplete="off"></div>
-<div><label>Opsiyonel model yılı</label><input id="year" type="number" min="1980" max="2035" placeholder="VIN yeterliyse boş bırak"></div>
-</div>
-<div class="row" style="margin-top:10px">
-<button class="primary" onclick="analyzeVIN()">GERÇEK VIN'İ ANALİZ ET</button>
-<button class="secondary" onclick="demoVIN()">DEMO ARAÇLA TEST</button>
-</div>
-<div id="status" class="status">NHTSA vPIC üzerinden üretici bildirimiyle VIN çözümleme yapılır.</div>
-</div>
-<div id="result"></div>
+  <h2>Gerçek VIN Sorgulama</h2>
+
+  <div class="row">
+    <input id="vin"
+      maxlength="17"
+      placeholder="17 haneli VIN / Şasi numarası">
+
+    <input id="modelYear"
+      type="number"
+      min="1980"
+      max="2035"
+      placeholder="Model yılı (opsiyonel)"
+      style="width:170px">
+
+    <button class="primary" id="searchBtn" onclick="analyzeVIN()">
+      VIN'İ ANALİZ ET
+    </button>
+
+    <button class="secondary" onclick="clearAll()">
+      TEMİZLE
+    </button>
+  </div>
+
+  <div class="small">
+    VIN 17 karakter olmalıdır. I, O ve Q karakterleri VIN'de kullanılmaz.
+    Model yılını biliyorsan girmek NHTSA çözümlemesini iyileştirebilir.
+  </div>
+
+  <div id="status" class="status"></div>
+
 </section>
 
-<section id="karsilastir" class="hidden">
-<div class="card"><h2>2 · Araç karşılaştırma laboratuvarı</h2>
-<p class="small">Sorguladığınız araçlar burada birikir. Aynı motor hacminin aynı vergi sonucu üretmek zorunda olmadığını göstermek için kullanılabilir.</p>
-<div id="compare"></div></div>
+
+<section id="results"></section>
+
+
+<section class="panel" id="comparePanel" style="display:none">
+  <h2>Araç Karşılaştırması</h2>
+
+  <div class="compare">
+    <table>
+      <thead>
+        <tr>
+          <th>Araç</th>
+          <th>Lüks</th>
+          <th>Performans</th>
+          <th>Ekonomi</th>
+          <th>Segment</th>
+          <th>Önerilen ÖTV</th>
+        </tr>
+      </thead>
+      <tbody id="compareBody"></tbody>
+    </table>
+  </div>
 </section>
 
-<section id="karar" class="hidden">
-<div class="card"><h2>3 · LÜKS-VIN karar ağacı</h2>
-<div class="tree">VIN
-│
-├─ 17 karakter ve format kontrolü
-│   └─ Hatalı → sorgu durdurulur
-│
-├─ NHTSA vPIC / veri sağlayıcı
-│   └─ Eksik alan → "bilinmiyor", uydurma yok
-│
-├─ Araç tipi
-│   ├─ Ticari/utilite → kullanım düzeltmesi
-│   └─ Binek → yolcu aracı analizi
-│
-├─ Elektrifikasyon
-│   ├─ BEV/PHEV/HEV → motor gücü + batarya + ağırlık
-│   └─ ICE → motor gücü + hacim + ağırlık
-│
-├─ Performans Skoru (0–100)
-│   └─ güç/ağırlık + çekiş + aktarma + performans verileri
-│
-├─ Segment Skoru (0–100)
-│   └─ gövde + araç tipi + seri/trim ipuçları
-│
-├─ Ekonomik Değer (0–100)
-│   └─ doğrulanmış fiyat varsa fiyat; yoksa düşük güven
-│
-├─ Lüks Endeksi (0–100)
-│   └─ ekonomik değer + donanım + konfor + teknoloji + segment
-│      + performansın sınırlı katkısı
-│
-└─ ÖTV Önerisi
-    └─ bileşik skor → yumuşak eğri → araştırma amaçlı oran</div>
-</div>
+
+<section class="panel">
+
+  <h2>Karar Ağacı</h2>
+
+  <div class="tree">
+
+    <div class="node">
+      <strong>1 — VIN</strong><br>
+      VIN biçimi ve temel kontrol basamağı incelenir.
+    </div>
+
+    <div class="node">
+      <strong>2 — Üretici</strong><br>
+      WMI ve API üretici bilgileri kullanılır.
+    </div>
+
+    <div class="node">
+      <strong>3 — Dünya veri katmanı</strong><br>
+      NHTSA/vPIC sonucu alınır. Sonuç eksikse araç otomatik olarak reddedilmez.
+    </div>
+
+    <div class="node">
+      <strong>4 — Versiyon</strong><br>
+      Marka → model → model yılı → motor → güç → yakıt → şanzıman →
+      çekiş → gövde → donanım zinciri oluşturulur.
+    </div>
+
+    <div class="node">
+      <strong>5 — Türkiye pazar eşleştirmesi</strong><br>
+      Araç Türkiye'de satılan/satılmış bir versiyona eşleşebiliyorsa
+      ayrıca Türkiye versiyon bilgisi gösterilir.
+    </div>
+
+    <div class="node">
+      <strong>6 — Performans</strong><br>
+      Sadece HP değil; güç/ağırlık, çekiş, motor tipi ve performans
+      özellikleri değerlendirilir.
+    </div>
+
+    <div class="node">
+      <strong>7 — Lüks</strong><br>
+      Fiyat, segment, donanım, teknoloji, konfor ve performans
+      ayrı bileşenler olarak değerlendirilir.
+    </div>
+
+    <div class="node">
+      <strong>8 — Ekonomik etki</strong><br>
+      Ekonomik değer ve araç sınıfı ayrıca değerlendirilir.
+    </div>
+
+    <div class="node">
+      <strong>9 — Kullanım amacı</strong><br>
+      Ticari araç ile özel kullanım otomobili aynı ekonomik kategoriye
+      zorla sokulmaz.
+    </div>
+
+    <div class="node">
+      <strong>10 — ÖTV simülasyonu</strong><br>
+      Bütün skorlar sürekli bir fonksiyonla birleştirilir.
+      Sabit araç listesi yoktur.
+    </div>
+
+  </div>
 </section>
 
-<section id="metod" class="hidden">
-<div class="card"><h2>4 · Araştırma metodolojisi</h2>
-<div class="step"><b>Performans ≠ Lüks.</b><br>C63 gibi yüksek performanslı bir otomobil, performans puanında yüksek çıkabilir; ancak S63 ile aynı lüks/konfor/segment puanına otomatik olarak sahip olmaz. Kodiaq RS de performans bileşeninde yüksek olup aile SUV karakteri nedeniyle aynı sonuca zorlanmaz.</div>
-<div class="step"><b>Marka tek başına vergi belirlemez.</b><br>Mercedes, Porsche vb. marka ismi doğrudan sabit puan eklemez. Marka/seri bilgisi yalnızca aracın diğer özelliklerini doğrulamak için kullanılabilir.</div>
-<div class="step"><b>Eksik veri uydurulmaz.</b><br>Bir alan bulunamıyorsa güven skoru düşürülür. Ücretli/kapsamlı veri sağlayıcıları daha sonra backend üzerinden eklenebilir.</div>
-<div class="step"><b>Elektrikli araçlar.</b><br>cc bulunmadığında sistem güç, ağırlık, batarya, segment, fiyat ve donanım gibi çok boyutlu göstergelere geçer.</div>
-<div class="step"><b>Vergi fonksiyonu.</b><br>Aşağıdaki oranlar resmi mevzuat değil, deneysel başlangıç eğrisidir. TÜBİTAK çalışmasında gerçek pazar/satış verileriyle kalibrasyon ve duyarlılık analizi yapılmalıdır.</div>
-</div>
-</section>
 
-<div class="footer">LÜKS-VIN 2.0 · Öğrenci araştırma prototipi · Kalıcı VIN kaydı yapılmaz; veriler yalnızca bu tarayıcı oturumunda tutulur. NHTSA vPIC verileri üretici bildirimlerine dayanır.</div>
+<footer>
+
+  <strong>LÜKS-VIN 2.1</strong><br>
+
+  Bu yazılım bir araştırma/prototip uygulamasıdır.
+  Resmî vergi, hukuk, sigorta, hasar veya araç tescil sistemi değildir.
+
+  <br><br>
+
+  VIN verisi varsayılan olarak tarayıcıda kalıcı olarak saklanmaz.
+  Bu sürüm TRAMER/araç sahibi kişisel verisi istemez.
+
+  <br><br>
+
+  Gerçek üretim sisteminde ticari VIN/veri sağlayıcılarının API anahtarları
+  kesinlikle frontend içine konulmamalıdır; backend üzerinden kullanılmalıdır.
+
+</footer>
+
 </div>
+
 
 <script>
-const history=[];
-const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
-const num=x=>{let n=parseFloat(x);return Number.isFinite(n)?n:null};
-const clean=x=>x==null?'':String(x).trim();
-function validVIN(v){
- v=clean(v).toUpperCase();
- return v.length===17 && /^[A-HJ-NPR-Z0-9]{17}$/.test(v);
-}
-function f(v){return v!==null&&v!==undefined&&String(v).trim()!==''&&String(v)!=='Not Applicable'?v:null}
-function field(raw,...keys){for(const k of keys){if(raw && f(raw[k])!==null)return raw[k]}return null}
 
-async function decodeVIN(vin,year){
- let url='https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/'+encodeURIComponent(vin)+'?format=json';
- if(year) url+='&modelyear='+encodeURIComponent(year);
- const r=await fetch(url,{headers:{Accept:'application/json'}});
- if(!r.ok) throw Error('NHTSA API HTTP '+r.status);
- const j=await r.json();
- if(!j.Results?.length) throw Error('VIN için NHTSA sonucu bulunamadı.');
- return j.Results[0];
+/* ================================================================
+   LÜKS-VIN 2.1
+   ================================================================
+
+   ANA PRENSİP:
+
+   VIN
+     ↓
+   VALIDATION
+     ↓
+   NHTSA / vPIC
+     ↓
+   NORMALIZATION
+     ↓
+   VERSION CLASSIFICATION
+     ↓
+   PERFORMANCE
+     ↓
+   LUXURY
+     ↓
+   ECONOMIC
+     ↓
+   SEGMENT
+     ↓
+   USAGE
+     ↓
+   ÖTV POLICY SIMULATION
+
+   ================================================================ */
+
+
+const state = {
+  vehicles: []
+};
+
+
+/* ================================================================
+   1. VIN
+   ================================================================ */
+
+function cleanVIN(v){
+  return String(v || "")
+    .toUpperCase()
+    .replace(/\s/g,"");
 }
 
-function normalize(r,vin){
- const hp=num(field(r,'EngineHP'));
- const kw=num(field(r,'EngineKW'));
- const battery=num(field(r,'BatteryKWh','BatteryKWh'));
- let powerHP=hp;
- if(powerHP===null && kw!==null) powerHP=kw*1.34102;
- return {
-  vin:vin,make:f(r.Make),model:f(r.Model),year:f(r.ModelYear),
-  trim:f(r.Trim),series:f(r.Series),manufacturer:f(r.Manufacturer),
-  body:f(r.BodyClass),type:f(r.VehicleType),fuel:f(r.FuelTypePrimary),
-  displacement:num(r.DisplacementL),hp:hp,kw:kw,powerHP:powerHP,
-  cylinders:num(r.EngineCylinders),drive:f(r.DriveType),trans:f(r.TransmissionStyle),
-  plant:f(r.PlantCity),country:f(r.PlantCountry),electrification:f(r.ElectrificationLevel),
-  battery:battery,gvwr:f(r.GVWR)
- };
+
+function validateVIN(vin){
+
+  if(vin.length !== 17){
+    return {
+      ok:false,
+      message:"VIN tam olarak 17 karakter olmalıdır."
+    };
+  }
+
+  if(/[IOQ]/.test(vin)){
+    return {
+      ok:false,
+      message:"VIN içinde I, O veya Q kullanılamaz."
+    };
+  }
+
+  if(!/^[A-HJ-NPR-Z0-9]{17}$/.test(vin)){
+    return {
+      ok:false,
+      message:"VIN yalnızca geçerli VIN karakterlerinden oluşabilir."
+    };
+  }
+
+  return {
+    ok:true
+  };
 }
+
+
+/* ================================================================
+   2. VIN CHECK DIGIT
+   ================================================================ */
+
+function vinChecksum(vin){
+
+  const transliteration = {
+    A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,
+    J:1,K:2,L:3,M:4,N:5,P:7,R:9,
+    S:2,T:3,U:4,V:5,W:6,X:7,Y:8,Z:9
+  };
+
+  const weights = [
+    8,7,6,5,4,3,2,10,0,9,8,7,6,5,4,3,2
+  ];
+
+  let sum=0;
+
+  for(let i=0;i<17;i++){
+
+    const c=vin[i];
+
+    let value;
+
+    if(/[0-9]/.test(c)){
+      value=Number(c);
+    }else{
+      value=transliteration[c];
+    }
+
+    if(value===undefined) return null;
+
+    sum += value * weights[i];
+  }
+
+  const remainder=sum%11;
+  const expected=remainder===10 ? "X" : String(remainder);
+
+  return {
+    valid:vin[8]===expected,
+    expected,
+    actual:vin[8]
+  };
+}
+
+
+/* ================================================================
+   3. STATUS
+   ================================================================ */
+
+function status(type,text){
+
+  const el=document.getElementById("status");
+
+  el.style.display="block";
+  el.className="status "+type;
+  el.textContent=text;
+}
+
+
+/* ================================================================
+   4. NHTSA
+   ================================================================ */
+
+async function nhtsaVIN(vin,year){
+
+  let url=
+    "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/"
+    +encodeURIComponent(vin)
+    +"?format=json";
+
+  if(year){
+    url+="&modelyear="+encodeURIComponent(year);
+  }
+
+  const controller=new AbortController();
+
+  const timeout=setTimeout(
+    ()=>controller.abort(),
+    15000
+  );
+
+  try{
+
+    const response=await fetch(url,{
+      method:"GET",
+      headers:{
+        "Accept":"application/json"
+      },
+      signal:controller.signal
+    });
+
+    if(!response.ok){
+      throw new Error(
+        "NHTSA HTTP "+response.status
+      );
+    }
+
+    const json=await response.json();
+
+    if(!json || !json.Results || !json.Results.length){
+      throw new Error("NHTSA sonuç döndürmedi.");
+    }
+
+    return json.Results[0];
+
+  }finally{
+
+    clearTimeout(timeout);
+
+  }
+}
+
+
+/* ================================================================
+   5. NORMALIZATION
+   ================================================================ */
+
+function value(v){
+
+  if(v===undefined || v===null) return null;
+
+  const s=String(v).trim();
+
+  if(
+    !s ||
+    s==="Not Applicable" ||
+    s==="Not Available" ||
+    s==="0"
+  ){
+    return null;
+  }
+
+  return s;
+}
+
+
+function number(v){
+
+  if(v===undefined || v===null) return null;
+
+  const n=parseFloat(
+    String(v).replace(",","")
+  );
+
+  return Number.isFinite(n) ? n : null;
+}
+
+
+function normalize(raw,vin){
+
+  return {
+
+    vin,
+
+    source:"NHTSA/vPIC",
+
+    make:value(raw.Make),
+
+    model:value(raw.Model),
+
+    year:number(raw.ModelYear),
+
+    trim:value(raw.Trim),
+
+    series:value(raw.Series),
+
+    body:value(raw.BodyClass),
+
+    vehicleType:value(raw.VehicleType),
+
+    fuel:value(raw.FuelTypePrimary),
+
+    fuelSecondary:value(raw.FuelTypeSecondary),
+
+    engine:value(raw.EngineModel),
+
+    displacement:number(raw.DisplacementL),
+
+    cylinders:number(raw.EngineCylinders),
+
+    hp:number(raw.EngineHP),
+
+    transmission:value(raw.TransmissionStyle),
+
+    gears:number(raw.TransmissionSpeeds),
+
+    drive:value(raw.DriveType),
+
+    plantCountry:value(raw.PlantCountry),
+
+    plantCity:value(raw.PlantCity),
+
+    plantCompany:value(raw.PlantCompanyName),
+
+    electrification:value(raw.ElectrificationLevel),
+
+    battery:null,
+
+    motorKW:null,
+
+    price:null,
+
+    commercial:null,
+
+    equipment:{}
+
+  };
+}
+
+
+/* ================================================================
+   6. TEXT CLASSIFIERS
+   ================================================================ */
+
+function lower(x){
+  return String(x || "").toLowerCase();
+}
+
 
 function isCommercial(v){
- const s=(clean(v.type)+' '+clean(v.body)).toLowerCase();
- return /truck|pickup|cargo|incomplete|commercial|bus|van/.test(s);
+
+  const text=lower(
+    (v.body||"")+" "+
+    (v.vehicleType||"")+" "+
+    (v.model||"")
+  );
+
+  if(
+    /cargo|van|truck|pickup|chassis|commercial|utility|cutaway/
+      .test(text)
+  ){
+    return true;
+  }
+
+  return false;
 }
-function segment(v){
- const s=(clean(v.body)+' '+clean(v.type)+' '+clean(v.series)+' '+clean(v.trim)).toLowerCase();
- if(isCommercial(v)) return {score:25,label:'Ticari / utilite'};
- if(/convertible|roadster/.test(s)) return {score:62,label:'Spor / cabrio'};
- if(/coupe/.test(s)) return {score:58,label:'Coupe'};
- if(/sport utility|suv/.test(s)) return {score:52,label:'SUV'};
- if(/sedan/.test(s)) return {score:42,label:'Sedan'};
- if(/hatchback/.test(s)) return {score:30,label:'Hatchback'};
- return {score:40,label:'Genel binek'};
+
+
+function isElectric(v){
+
+  const text=lower(
+    (v.fuel||"")+" "+
+    (v.electrification||"")
+  );
+
+  return /electric|bev|battery/.test(text);
 }
-function performance(v){
- let score=null,note='',confidence='Düşük';
- if(v.powerHP!==null){
-   if(v.weightKg){
-     const ppt=v.powerHP/(v.weightKg/1000);
-     score=100/(1+Math.exp(-0.028*(ppt-120)));
-     confidence='Yüksek';note=Math.round(ppt)+' HP/ton';
-   }else{
-     score=clamp((v.powerHP-70)/630*85+10,5,95);
-     confidence='Orta';note=Math.round(v.powerHP)+' HP; ağırlık yok';
-   }
- }else{score=35;note='Güç verisi yok';}
- let bonus=0,s=(clean(v.drive)+' '+clean(v.trans)).toLowerCase();
- if(/awd|4wd|4x4/.test(s))bonus+=5; else if(/rwd/.test(s))bonus+=2;
- if(/dual|dct/.test(s))bonus+=2;
- return {score:Math.round(clamp(score+bonus,0,100)),confidence,note};
+
+
+function classifySegment(v){
+
+  const text=lower(
+    (v.body||"")+" "+
+    (v.vehicleType||"")+" "+
+    (v.model||"")
+  );
+
+  if(
+    /cargo|commercial|truck|pickup|van|chassis/
+      .test(text)
+  ){
+    return {
+      name:"Ticari / Utilite",
+      score:25
+    };
+  }
+
+  if(/convertible|roadster/.test(text)){
+    return {
+      name:"Cabrio / Roadster",
+      score:62
+    };
+  }
+
+  if(/coupe/.test(text)){
+    return {
+      name:"Coupe",
+      score:58
+    };
+  }
+
+  if(/suv|sport utility/.test(text)){
+    return {
+      name:"SUV",
+      score:50
+    };
+  }
+
+  if(/hatchback/.test(text)){
+    return {
+      name:"Hatchback",
+      score:30
+    };
+  }
+
+  if(/sedan/.test(text)){
+    return {
+      name:"Sedan",
+      score:40
+    };
+  }
+
+  return {
+    name:"Bilinmeyen",
+    score:40
+  };
 }
-function economic(v){
- // NHTSA vPIC does not normally provide Turkish retail price. Do not invent it.
- return {score:40,confidence:'Düşük',note:'Fiyat verisi bu kaynakta yok; fiyat puanı nötr başlangıç değeri. Gerçek modelde Türkiye fiyat veri katmanı eklenmelidir.'};
+
+
+/* ================================================================
+   7. PERFORMANCE
+   ================================================================ */
+
+function logistic(x,k=0.028,mid=120){
+
+  return 100/(1+Math.exp(-k*(x-mid)));
+
 }
-function luxury(v,p,e,s){
- let base=e.score*.32+s.score*.18+p.score*.10;
- const txt=(clean(v.model)+' '+clean(v.series)+' '+clean(v.trim)+' '+clean(v.body)).toLowerCase();
- if(/luxury|premium|maybach|s-class|s class|7 series|a8|panamera|bentley|rolls/.test(txt))base+=18;
- if(/sport|amg|m|rs|type r|performance|turbo/.test(txt))base+=7;
- if(/suv/.test(txt))base+=3;
- return {score:Math.round(clamp(base,0,100)),confidence:e.confidence==='Düşük'?'Düşük':'Orta'};
+
+
+function performanceScore(v){
+
+  let hp=v.hp;
+
+  /*
+    NHTSA'da HP yok ama elektrik motor gücü gibi veri başka
+    kaynakta geldiğinde burada dönüştürülebilir.
+  */
+
+  if(!hp){
+
+    return {
+      score:null,
+      confidence:"Düşük",
+      reason:"Motor gücü verisi bulunamadı."
+    };
+
+  }
+
+  /*
+    Ağırlık NHTSA'dan güvenilir şekilde alınmadığı için
+    burada ağırlık yoksa yalnızca HP tabanlı değerlendirme
+    yapılır ve güven seviyesi düşürülür.
+  */
+
+  let score;
+
+  if(v.hp){
+
+    score=
+      Math.max(
+        5,
+        Math.min(
+          95,
+          ((v.hp-70)/(700-70))*85+10
+        )
+      );
+
+  }
+
+  let bonus=0;
+
+  const drive=lower(v.drive);
+
+  if(/awd|4wd|4x4/.test(drive)){
+    bonus+=5;
+  }
+
+  if(/rwd|rear/.test(drive)){
+    bonus+=3;
+  }
+
+  const trans=lower(v.transmission);
+
+  if(/dct|dual clutch/.test(trans)){
+    bonus+=3;
+  }
+
+  if(/cvt/.test(trans)){
+    bonus-=3;
+  }
+
+  score=Math.max(
+    0,
+    Math.min(
+      100,
+      Math.round(score+bonus)
+    )
+  );
+
+  return {
+    score,
+    confidence:v.hp ? "Orta" : "Düşük",
+    reason:
+      v.hp+
+      " HP"+
+
+      (v.drive
+        ? " · "+v.drive
+        : "")
+  };
 }
-function otv(p,e,s,l,v){
- const usage=isCommercial(v)?25:55;
- const composite=l.score*.42+e.score*.20+p.score*.16+s.score*.12+usage*.10;
- // Research-only experimental continuous curve, deliberately not current Turkish law.
- const x=composite/100, curve=.5*(1+Math.tanh(5.0*(x-.50)));
- let rate=60+(500-60)*curve;
- if(isCommercial(v))rate*=.82;
- return {rate:Math.round(clamp(rate,60,500)*10)/10,composite:Math.round(composite)};
+
+
+/* ================================================================
+   8. ECONOMIC SCORE
+   ================================================================ */
+
+function economicScore(v,segment){
+
+  /*
+    Gerçek fiyat yoksa sahte fiyat üretmiyoruz.
+
+    Bunun yerine ekonomik skorun bir kısmı
+    "hesaplanamaz" kabul edilir.
+
+    Segment sadece yardımcı sinyal olarak kullanılır.
+  */
+
+  let score=segment.score;
+
+  let confidence="Düşük";
+
+  if(v.price){
+
+    /*
+      Gerçek üretim sürümünde Türkiye liste fiyatı
+      backend'den alınmalıdır.
+    */
+
+    const p=v.price;
+
+    if(p<30000) score=20;
+    else if(p<50000) score=35;
+    else if(p<80000) score=50;
+    else if(p<120000) score=65;
+    else if(p<200000) score=80;
+    else score=95;
+
+    confidence="Orta";
+  }
+
+  return {
+    score,
+    confidence
+  };
 }
-function confidence(v){
- let n=0,t=8;
- [v.make,v.model,v.year,v.body,v.fuel,v.powerHP,v.drive,v.trans].forEach(x=>{if(x!==null)n++});
- return Math.round(n/t*100);
+
+
+/* ================================================================
+   9. LUXURY
+   ================================================================ */
+
+function luxuryScore(v,perf,econ,segment){
+
+  let base=0;
+
+  /*
+    Burada marka adına otomatik puan verilmez.
+
+    Mercedes = yüksek
+    Toyota = düşük
+
+    gibi bir önyargı YOK.
+
+    Araçta gerçekten bulunan özellikler
+    veri geldikçe puana girer.
+  */
+
+  base += econ.score*0.35;
+
+  base += segment.score*0.20;
+
+  if(perf.score!==null){
+    base += perf.score*0.15;
+  }
+
+  /*
+    Donanım veri kaynağı olmadığı için
+    şu aşamada 0.30 ağırlık boş bırakılır.
+  */
+
+  const score=Math.round(
+    Math.min(
+      100,
+      base/0.70
+    )
+  );
+
+  return {
+    score,
+    confidence:
+      perf.score!==null
+        ? "Orta"
+        : "Düşük"
+  };
 }
-function bar(label,val){
- return `<div class="bar"><div class="barhead"><span>${label}</span><b>${val}/100</b></div><div class="track"><div class="fill" style="width:${val}%"></div></div></div>`;
+
+
+/* ================================================================
+   10. ÖTV MODELİ
+   ================================================================ */
+
+function sigmoid(x){
+
+  return 1/(1+Math.exp(-x));
+
 }
-function render(r){
- const v=r.v,p=r.p,e=r.e,s=r.s,l=r.l,o=r.o;
- document.getElementById('result').innerHTML=`
- <div class="card">
-  <div class="hero"><div><span class="pill">GERÇEK NHTSA vPIC</span><h2>${esc(v.make||'Bilinmeyen')} ${esc(v.model||'')}</h2><div class="small">${esc(v.year||'—')} · ${esc(v.trim||v.series||'Trim yok')} · VIN: ${esc(v.vin)}</div></div><div style="text-align:right"><div class="small">ÖNERİLEN ÖTV</div><div class="rate">%${o.rate}</div><div class="small">deneysel model sonucu</div></div></div>
-  <div class="kpi" style="margin-top:15px">
-   <div class="k"><b>${l.score}</b><span>LÜKS ENDEKSİ</span></div><div class="k"><b>${p.score}</b><span>PERFORMANS</span></div><div class="k"><b>${e.score}</b><span>EKONOMİK DEĞER</span></div><div class="k"><b>${s.score}</b><span>SEGMENT</span></div>
-  </div>
- </div>
- <div class="card"><h2>Araç profili</h2><div class="grid">
-  ${spec('Üretici',v.manufacturer)}${spec('Gövde',v.body)}${spec('Araç tipi',v.type)}${spec('Yakıt',v.fuel)}
-  ${spec('Motor',v.displacement===null?'—':v.displacement+' L')}${spec('Güç',v.powerHP===null?'—':Math.round(v.powerHP)+' HP')}${spec('Çekiş',v.drive)}${spec('Şanzıman',v.trans)}
-  ${spec('Elektrifikasyon',v.electrification)}${spec('Fabrika',v.plant)}${spec('Ülke',v.country)}${spec('Silindir',v.cylinders)}
- </div></div>
- <div class="card"><h2>Skorların gerekçesi</h2>${bar('Lüks Endeksi',l.score)}${bar('Performans',p.score)}${bar('Ekonomik Değer',e.score)}${bar('Segment',s.score)}
- <details><summary>Model neden bu ÖTV'yi önerdi?</summary><ul>
- <li>Lüks Endeksi: ${l.score}/100.</li><li>Performans: ${p.score}/100 (${esc(p.note)}).</li><li>Segment: ${esc(s.label)} (${s.score}/100).</li><li>Ekonomik değer: ${e.score}/100 — ${esc(e.note)}</li><li>Bileşik puan: ${o.composite}/100.</li><li>${isCommercial(v)?'Ticari kullanım için aşağı yönlü düzeltme uygulandı.':'Binek araç kullanım varsayımı uygulandı.'}</li>
- </ul><p class="small">Güven skoru: %${confidence(v)}. NHTSA alanlarının bulunmaması, özellikle fiyat/donanım açısından nihai karar güvenini sınırlar.</p></details></div>`;
- history.unshift(r);renderCompare();
+
+
+function calculateOTV(v,perf,econ,lux,segment){
+
+  /*
+    Prototip politika eğrisi.
+
+    Amaç:
+      normal araç
+      ↓
+      gelişmiş araç
+      ↓
+      premium
+      ↓
+      lüks
+      ↓
+      ultra-lüks
+
+    şeklinde sürekli artan oran üretmek.
+
+    Bu RESMİ ÖTV DEĞİLDİR.
+  */
+
+  let composite=
+
+      lux.score*0.40+
+
+      econ.score*0.20+
+
+      (perf.score===null
+        ? 40
+        : perf.score)*0.15+
+
+      segment.score*0.15+
+
+      (isCommercial(v) ? 20 : 50)*0.10;
+
+
+  composite=Math.max(
+    0,
+    Math.min(
+      100,
+      composite
+    )
+  );
+
+
+  /*
+    Başlangıç tabanı.
+
+    Gerçek politika çalışmasında
+    bu değerler satış/vergi geliri verileriyle
+    kalibre edilmelidir.
+  */
+
+  const min=80;
+  const max=220;
+
+  const normalized=composite/100;
+
+  const curve=sigmoid(
+    (normalized-0.50)*6
+  );
+
+
+  let rate=
+    min+
+    (max-min)*curve;
+
+
+  /*
+    Ticari araç düzeltmesi.
+  */
+
+  if(isCommercial(v)){
+    rate*=0.72;
+  }
+
+
+  /*
+    Elektrikli araçta sadece HP'ye bakılmaz.
+    Elektrifikasyon, fiyat ve lüks ayrıca değerlendirilecektir.
+  */
+
+
+  rate=Math.max(
+    80,
+    Math.min(
+      max,
+      rate
+    )
+  );
+
+
+  return {
+
+    rate:Math.round(rate*10)/10,
+
+    composite:Math.round(composite),
+
+    min,
+
+    max
+
+  };
 }
-function spec(k,v){return `<div style="padding:7px 0;border-bottom:1px dotted #26334a;display:flex;justify-content:space-between;gap:10px"><span class="small">${k}</span><b style="text-align:right">${esc(v||'Veri yok')}</b></div>`}
-function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function renderCompare(){
- const el=document.getElementById('compare');
- if(!history.length){el.innerHTML='<p class="small">Henüz araç sorgulanmadı.</p>';return}
- el.innerHTML=`<div style="overflow:auto"><table><thead><tr><th>Araç</th><th>Lüks</th><th>Performans</th><th>Ekonomik</th><th>Segment</th><th>ÖTV</th></tr></thead><tbody>${history.map(r=>`<tr><td>${esc(r.v.make)} ${esc(r.v.model)}</td><td class="num">${r.l.score}</td><td class="num">${r.p.score}</td><td class="num">${r.e.score}</td><td class="num">${r.s.score}</td><td class="num"><b>%${r.o.rate}</b></td></tr>`).join('')}</tbody></table></div>`;
+
+
+/* ================================================================
+   11. EXPLANATION
+   ================================================================ */
+
+function explain(v,perf,econ,lux,segment,otv){
+
+  const list=[];
+
+  list.push(
+    "Araç segmenti: "+
+    segment.name+
+    " ("+
+    segment.score+
+    "/100)."
+  );
+
+
+  if(v.hp){
+
+    list.push(
+      "Motor gücü "+
+      v.hp+
+      " HP olarak doğrulandı."
+    );
+
+  }else{
+
+    list.push(
+      "Motor gücü verisi bulunmadığından performans hesabının güveni düşürüldü."
+    );
+
+  }
+
+
+  if(perf.score!==null){
+
+    list.push(
+      "Performans skoru "+
+      perf.score+
+      "/100."
+    );
+
+  }
+
+
+  list.push(
+    "Lüks skoru "+
+    lux.score+
+    "/100."
+  );
+
+
+  list.push(
+    "Ekonomik değer skoru "+
+    econ.score+
+    "/100."
+  );
+
+
+  if(isCommercial(v)){
+
+    list.push(
+      "Araç ticari/utilite karakteri taşıdığı için ÖTV simülasyonunda aşağı yönlü kullanım düzeltmesi uygulandı."
+    );
+
+  }else{
+
+    list.push(
+      "Araç binek/özel kullanım tarafında değerlendirildi."
+    );
+
+  }
+
+
+  list.push(
+    "ÖTV simülasyonunda bileşik skor "+
+    otv.composite+
+    "/100."
+  );
+
+
+  return list;
 }
+
+
+/* ================================================================
+   12. CONFIDENCE
+   ================================================================ */
+
+function overallConfidence(v,perf,econ,lux){
+
+  let score=0;
+  let total=0;
+
+  const fields=[
+    v.make,
+    v.model,
+    v.year,
+    v.body,
+    v.fuel,
+    v.hp,
+    v.transmission,
+    v.drive,
+    v.plantCountry
+  ];
+
+  for(const x of fields){
+
+    total++;
+
+    if(x!==null && x!==undefined){
+      score++;
+    }
+
+  }
+
+  const percentage=score/total;
+
+  if(percentage>=0.80){
+    return "Yüksek";
+  }
+
+  if(percentage>=0.55){
+    return "Orta";
+  }
+
+  return "Düşük";
+}
+
+
+/* ================================================================
+   13. HTML HELPERS
+   ================================================================ */
+
+function safe(x){
+
+  if(x===null || x===undefined || x===""){
+    return "Veri yok";
+  }
+
+  return String(x)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+
+
+function scoreBar(name,value){
+
+  if(value===null){
+
+    return `
+      <div class="scoreline">
+        <span>${name}</span>
+        <div class="track"></div>
+        <span>—</span>
+      </div>
+    `;
+
+  }
+
+  return `
+    <div class="scoreline">
+
+      <span>${name}</span>
+
+      <div class="track">
+        <div
+          class="fill"
+          style="
+            width:${value}%;
+            background:var(--teal)
+          ">
+        </div>
+      </div>
+
+      <span>${Math.round(value)}</span>
+
+    </div>
+  `;
+}
+
+
+/* ================================================================
+   14. RENDER
+   ================================================================ */
+
+function renderVehicle(record){
+
+  const v=record.vehicle;
+
+  const perf=record.performance;
+  const econ=record.economic;
+  const lux=record.luxury;
+  const seg=record.segment;
+  const otv=record.otv;
+
+  const confidence=record.confidence;
+
+  const title=
+    (v.make || "Bilinmeyen marka")+
+    " "+
+    (v.model || "Bilinmeyen model");
+
+
+  const reasons=record.reasons
+    .map(x=>"<li>"+safe(x)+"</li>")
+    .join("");
+
+
+  return `
+
+  <article class="result">
+
+    <div class="result-head">
+
+      <div>
+
+        <div class="result-title">
+          ${safe(title)}
+        </div>
+
+        <div class="result-sub">
+          VIN: ${safe(v.vin)}
+          · Model yılı:
+          ${safe(v.year || "bilinmiyor")}
+        </div>
+
+      </div>
+
+
+      <div class="badges">
+
+        <span class="badge real">
+          NHTSA / vPIC
+        </span>
+
+        <span class="badge ${
+          confidence==="Yüksek"
+            ? "good"
+            : "warning"
+        }">
+          VERİ GÜVENİ: ${confidence}
+        </span>
+
+        ${
+          isCommercial(v)
+          ? `<span class="badge good">TİCARİ</span>`
+          : ""
+        }
+
+      </div>
+
+    </div>
+
+
+    <div class="body">
+
+      <div class="specgrid">
+
+        <div class="spec">
+          <span>Marka</span>
+          <span>${safe(v.make)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Model</span>
+          <span>${safe(v.model)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Trim</span>
+          <span>${safe(v.trim)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Seri</span>
+          <span>${safe(v.series)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Motor</span>
+          <span>${safe(v.engine)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Motor hacmi</span>
+          <span>${
+            v.displacement
+              ? v.displacement+" L"
+              : "Veri yok"
+          }</span>
+        </div>
+
+        <div class="spec">
+          <span>Güç</span>
+          <span>${
+            v.hp
+              ? v.hp+" HP"
+              : "Veri yok"
+          }</span>
+        </div>
+
+        <div class="spec">
+          <span>Silindir</span>
+          <span>${safe(v.cylinders)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Yakıt</span>
+          <span>${safe(v.fuel)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Elektrifikasyon</span>
+          <span>${safe(v.electrification)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Şanzıman</span>
+          <span>${safe(v.transmission)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Vites</span>
+          <span>${safe(v.gears)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Çekiş</span>
+          <span>${safe(v.drive)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Gövde</span>
+          <span>${safe(v.body)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Üretim ülkesi</span>
+          <span>${safe(v.plantCountry)}</span>
+        </div>
+
+        <div class="spec">
+          <span>Üretim tesisi</span>
+          <span>${safe(v.plantCompany)}</span>
+        </div>
+
+      </div>
+
+
+      <div class="scorebar">
+
+        ${scoreBar(
+          "Lüks",
+          lux.score
+        )}
+
+        ${scoreBar(
+          "Performans",
+          perf.score
+        )}
+
+        ${scoreBar(
+          "Ekonomik",
+          econ.score
+        )}
+
+        ${scoreBar(
+          "Segment",
+          seg.score
+        )}
+
+      </div>
+
+
+      <div class="otv">
+
+        <div class="otv-title">
+          LÜKS-VIN ÖTV POLİTİKA SİMÜLASYONU
+        </div>
+
+        <div class="otv-value">
+          %${otv.rate}
+        </div>
+
+        <div class="otv-desc">
+
+          Bileşik skor:
+          ${otv.composite}/100
+
+          · Model aralığı:
+          %${otv.min}–%${otv.max}
+
+          <br>
+
+          Bu değer mevcut devlet ÖTV oranı değildir;
+          proje kapsamında önerilen sürekli vergi eğrisinin
+          simülasyon sonucudur.
+
+        </div>
+
+      </div>
+
+
+      <div class="explain">
+
+        <h3>
+          NEDEN BU ORAN?
+        </h3>
+
+        <ul>
+          ${reasons}
+        </ul>
+
+      </div>
+
+
+      <div class="confidence">
+
+        <strong>Veri güveni:</strong>
+        ${confidence}
+
+        <br>
+
+        NHTSA'da bulunmayan fiyat, donanım veya
+        TRAMER bilgileri uydurulmamıştır.
+
+      </div>
+
+    </div>
+
+  </article>
+
+  `;
+}
+
+
+function renderAll(){
+
+  const container=
+    document.getElementById("results");
+
+  container.innerHTML=
+    state.vehicles
+      .map(renderVehicle)
+      .join("");
+
+
+  renderComparison();
+
+}
+
+
+/* ================================================================
+   15. COMPARISON
+   ================================================================ */
+
+function renderComparison(){
+
+  const panel=
+    document.getElementById("comparePanel");
+
+  const body=
+    document.getElementById("compareBody");
+
+
+  if(state.vehicles.length<2){
+
+    panel.style.display="none";
+
+    return;
+  }
+
+
+  panel.style.display="block";
+
+
+  body.innerHTML=
+    state.vehicles
+      .map(r=>`
+
+        <tr>
+
+          <td>
+            ${safe(
+              (r.vehicle.make||"")+
+              " "+
+              (r.vehicle.model||"")
+            )}
+          </td>
+
+          <td class="num">
+            ${r.luxury.score}
+          </td>
+
+          <td class="num">
+            ${
+              r.performance.score===null
+                ? "—"
+                : r.performance.score
+            }
+          </td>
+
+          <td class="num">
+            ${r.economic.score}
+          </td>
+
+          <td class="num">
+            ${r.segment.score}
+          </td>
+
+          <td class="num">
+            %${r.otv.rate}
+          </td>
+
+        </tr>
+
+      `)
+      .join("");
+
+}
+
+
+/* ================================================================
+   16. MAIN ANALYSIS
+   ================================================================ */
+
 async function analyzeVIN(){
- const vin=document.getElementById('vin').value.toUpperCase().trim(), year=document.getElementById('year').value;
- const st=document.getElementById('status');
- if(!validVIN(vin)){st.innerHTML='<span class="err">Geçersiz VIN. 17 karakter ve I/O/Q içermeyen VIN bekleniyor.</span>';return}
- st.textContent='NHTSA vPIC sorgulanıyor…';
- try{
-   const raw=await decodeVIN(vin,year); const v=normalize(raw,vin);
-   // NHTSA does not supply curb weight consistently; leave it unknown rather than invent.
-   v.weightKg=null;
-   const s=segment(v),p=performance(v),e=economic(v),l=luxury(v,p,e,s),o=otv(p,e,s,l,v);
-   render({v,p,e,s,l,o});
-   st.innerHTML='<span class="ok">Analiz tamamlandı. Veriler NHTSA üretici bildirimlerinden alınmıştır.</span>';
- }catch(err){st.innerHTML='<span class="err">Ağ/veri hatası: '+esc(err.message)+'<br>İnternet bağlantınızı ve VIN\'i kontrol edin. NHTSA API erişimi tarayıcı/ağ tarafından engelleniyorsa aynı HTML dosyası gerçek veriye ulaşamaz.</span>'}
+
+  const input=
+    document.getElementById("vin");
+
+  const btn=
+    document.getElementById("searchBtn");
+
+  const vin=
+    cleanVIN(input.value);
+
+  const year=
+    document.getElementById("modelYear").value;
+
+
+  const validation=
+    validateVIN(vin);
+
+
+  if(!validation.ok){
+
+    status(
+      "error",
+      validation.message
+    );
+
+    return;
+  }
+
+
+  btn.disabled=true;
+
+
+  status(
+    "loading",
+    "VIN doğrulanıyor ve NHTSA/vPIC sorgulanıyor..."
+  );
+
+
+  try{
+
+    const checksum=
+      vinChecksum(vin);
+
+
+    const raw=
+      await nhtsaVIN(
+        vin,
+        year
+      );
+
+
+    /*
+      Eğer API cevap verdi ama araç alanları boşsa
+      bunu "araç yok" diye göstermiyoruz.
+    */
+
+
+    const vehicle=
+      normalize(
+        raw,
+        vin
+      );
+
+
+    const segment=
+      classifySegment(
+        vehicle
+      );
+
+
+    const performance=
+      performanceScore(
+        vehicle
+      );
+
+
+    const economic=
+      economicScore(
+        vehicle,
+        segment
+      );
+
+
+    const luxury=
+      luxuryScore(
+        vehicle,
+        performance,
+        economic,
+        segment
+      );
+
+
+    const otv=
+      calculateOTV(
+        vehicle,
+        performance,
+        economic,
+        luxury,
+        segment
+      );
+
+
+    const reasons=
+      explain(
+        vehicle,
+        performance,
+        economic,
+        luxury,
+        segment,
+        otv
+      );
+
+
+    const confidence=
+      overallConfidence(
+        vehicle,
+        performance,
+        economic,
+        luxury
+      );
+
+
+    state.vehicles.unshift({
+
+      vehicle,
+
+      segment,
+
+      performance,
+
+      economic,
+
+      luxury,
+
+      otv,
+
+      reasons,
+
+      confidence
+
+    });
+
+
+    renderAll();
+
+
+    let message=
+      "Analiz tamamlandı.";
+
+    if(
+      checksum &&
+      !checksum.valid
+    ){
+
+      message+=
+        " VIN kontrol basamağı beklenen değerle uyuşmuyor; bu sonuç tek başına VIN'in yanlış olduğunu kanıtlamaz.";
+
+    }
+
+
+    if(
+      !vehicle.make &&
+      !vehicle.model
+    ){
+
+      message+=
+        " NHTSA bu VIN için yeterli araç kimliği döndürmedi.";
+
+    }
+
+
+    status(
+      "ok",
+      message
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    status(
+      "error",
+      "NHTSA/vPIC sorgusu başarısız oldu: "+
+      error.message+
+      ". Bu, aracın mevcut olmadığı anlamına gelmez; veri kaynağının bu VIN'i tanımadığı anlamına gelebilir."
+    );
+
+  }finally{
+
+    btn.disabled=false;
+
+  }
+
 }
-function demoVIN(){
- const d={VIN:'1HGCM82633A004352',Make:'Honda',Model:'Accord',ModelYear:'2003',BodyClass:'Sedan',VehicleType:'PASSENGER CAR',FuelTypePrimary:'Gasoline',DisplacementL:'2.4',EngineHP:'160',EngineCylinders:'4',DriveType:'FWD',TransmissionStyle:'Automatic',Manufacturer:'Honda',PlantCity:'Marysville',PlantCountry:'United States'};
- const v=normalize(d,d.VIN),s=segment(v),p=performance(v),e=economic(v),l=luxury(v,p,e,s),o=otv(p,e,s,l,v);render({v,p,e,s,l,o});document.getElementById('status').innerHTML='<span class="warn">Demo veri. Gerçek NHTSA sorgusu değildir.</span>';
+
+
+/* ================================================================
+   17. CLEAR
+   ================================================================ */
+
+function clearAll(){
+
+  state.vehicles=[];
+
+  document.getElementById(
+    "results"
+  ).innerHTML="";
+
+  document.getElementById(
+    "compareBody"
+  ).innerHTML="";
+
+  document.getElementById(
+    "comparePanel"
+  ).style.display="none";
+
+  document.getElementById(
+    "status"
+  ).style.display="none";
+
 }
-function tab(id,btn){document.querySelectorAll('section[id]').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(id==='karsilastir')renderCompare()}
-document.getElementById('vin').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));
+
+
+/* ================================================================
+   18. ENTER KEY
+   ================================================================ */
+
+document
+  .getElementById("vin")
+  .addEventListener(
+    "keydown",
+    function(e){
+
+      if(e.key==="Enter"){
+        analyzeVIN();
+      }
+
+    }
+  );
+
+
+/* ================================================================
+   19. DEMO / TEST VIN
+   ================================================================
+
+   Buraya gerçek VIN koymuyorum.
+
+   Gerçek VIN'i kullanıcı kendisi girecek.
+
+   Böylece uygulama sahte VIN ile gerçek veri varmış
+   izlenimi oluşturmaz.
+   ================================================================ */
+
 </script>
+
 </body>
 </html>
